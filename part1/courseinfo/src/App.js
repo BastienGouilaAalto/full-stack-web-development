@@ -8,11 +8,23 @@ const HeaderCourse = (props) => {
   )
 }
 
-const ContentCourse = (props) => {
+const PartContentCourse = (props) => {
   return (
     <div>
       <p>
       {props.name} {props.exercises}      
+        </p>
+    </div>
+  )
+}
+
+const ContentCourse = (props) => {
+  return (
+    <div>
+      <p>
+      <PartContentCourse name={props.part1} exercises={props.exercises1}/>
+      <PartContentCourse name={props.part2} exercises={props.exercises2}/>
+      <PartContentCourse name={props.part3} exercises={props.exercises3}/>   
         </p>
     </div>
   )
@@ -38,9 +50,7 @@ const App = () => {
   return (
     <div>
       <HeaderCourse name={course}/>
-      <ContentCourse name={part1} exercises={exercises1}/>
-      <ContentCourse name={part2} exercises={exercises2}/>
-      <ContentCourse name={part3} exercises={exercises3}/>
+      <ContentCourse part1={part1} exercises1={exercises1} part2={part2} exercises2={exercises2} part3={part3} exercises3={exercises3}/>
       <TotalExercises total={exercises1 + exercises2 + exercises3}/>
     </div>
   )
