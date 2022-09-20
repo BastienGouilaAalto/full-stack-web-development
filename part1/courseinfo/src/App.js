@@ -13,7 +13,7 @@ const PartContentCourse = (props) => {
     <div>
       <p>
       {props.name} {props.exercises}      
-        </p>
+      </p>
     </div>
   )
 }
@@ -21,11 +21,9 @@ const PartContentCourse = (props) => {
 const ContentCourse = (props) => {
   return (
     <div>
-      <p>
       <PartContentCourse name={props.part1} exercises={props.exercises1}/>
       <PartContentCourse name={props.part2} exercises={props.exercises2}/>
-      <PartContentCourse name={props.part3} exercises={props.exercises3}/>   
-        </p>
+      <PartContentCourse name={props.part3} exercises={props.exercises3}/>
     </div>
   )
 }
