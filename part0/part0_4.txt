@@ -24,11 +24,13 @@ and presses the save button
 end note
 browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
 note over server: 
+Payload is:
+Form Data {note: hewwo}
 server processes the new note
 and sends url redirect to browser
+status code 302
 end note
 server-->browser: URL REDIRECT https://studies.cs.helsinki.fi/exampleapp/notes
-
 
 
 browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
