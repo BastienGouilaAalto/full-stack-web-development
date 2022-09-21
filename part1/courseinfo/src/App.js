@@ -2,7 +2,7 @@ const HeaderCourse = (props) => {
   return (
     <div>
       <h1>
-        {props.name}
+        {props.course}
       </h1>
     </div>
   )
@@ -21,41 +21,45 @@ const PartContentCourse = (props) => {
 const ContentCourse = (props) => {
   return (
     <div>
-      <PartContentCourse name={props.part1.name} exercises={props.part1.exercises}/>
-      <PartContentCourse name={props.part2.name} exercises={props.part2.exercises}/>
-      <PartContentCourse name={props.part3.name} exercises={props.part3.exercises}/>
+    <PartContentCourse name={props.parts[0].name} exercises={props.parts[0].exercises}/>
+    <PartContentCourse name={props.parts[1].name} exercises={props.parts[1].exercises}/>
+    <PartContentCourse name={props.parts[2].name} exercises={props.parts[2].exercises}/>
     </div>
   )
 }
 
 const TotalExercises = (props) => {
+  let total = 0
+  props.parts.forEach(part => {total += part.exercises})
   return (
     <div>
-      <p>Number of exercises {props.total}</p>
+      <p>Number of exercises {total}</p>
     </div>
   )
 }
 
 const App = () => {
-    const course = 'Half Stack application development'
-    const part1 = {
-      name: 'Fundamentals of React',
-      exercises: 10
-    }
-    const part2 = {
-      name: 'Using props to pass data',
-      exercises: 7
-    }
-    const part3 = {
-      name: 'State of a component',
-      exercises: 14
-    }
+  const course = 'Half Stack application development'
+    const parts = [
+      {
+        name: 'Fundamentals of React',
+        exercises: 10
+      },
+      {
+        name: 'Using props to pass data',
+        exercises: 7
+      },
+      {
+        name: 'State of a component',
+        exercises: 14
+      }
+    ]
 
   return (
     <div>
-      <HeaderCourse name={course}/>
-      <ContentCourse part1={part1} part2={part2} part3={part3}/>
-      <TotalExercises total={part1.exercises + part2.exercises + part3.exercises}/>
+      <HeaderCourse course={course}/>
+      <ContentCourse parts={parts}/>
+      <TotalExercises parts={parts}/>
     </div>
   )
 }
