@@ -73,15 +73,15 @@ const App = () => {
     <div>
       <h2>give feedback</h2>
         <Button        
-          onClick={goodReview}        
+          onClick={() => goodReview()}        
           text='good'
         />      
         <Button        
-          onClick={neutralReview}        
+          onClick={() => neutralReview()}        
           text='neutral'
         />           
         <Button        
-          onClick={badReview}
+          onClick={() => badReview()}
           text='bad'/>
       <h2>statistics</h2>
         <Statistics clicks={[good, neutral, bad, allClicks]}/>
