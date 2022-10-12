@@ -1,4 +1,13 @@
-const Country = ({fullInfo, country}) => {
+import { useState } from 'react'
+
+const Country = ({displayFullInfo, country}) => {
+    const [fullInfo, setFullInfo] = useState(displayFullInfo)
+
+    const handleShowButtonClick = () => 
+    {
+        setFullInfo(true)
+    }
+
     if(fullInfo)
     {
         return(
@@ -21,6 +30,9 @@ const Country = ({fullInfo, country}) => {
         return(
         <div>
             <>{country.name.common}</>
+            <button onClick={() => handleShowButtonClick()}>
+                show
+            </button>
         </div>
         )
     }
@@ -31,14 +43,14 @@ const Countries = ({countries}) => {
     {
         return(
             <div>
-                <Country fullInfo={true} country={countries[0]}/>
+                <Country displayFullInfo={true} country={countries[0]}/>
             </div>
         )
     }
     else if(countries.length <= 10){
         return(
             <div>
-                {countries.map(country => <Country key={country.ccn3} fullInfo={false} country={country}/>)}
+                {countries.map(country => <Country key={country.ccn3} displayFullInfo={false} country={country}/>)}
             </div>
         )
     }
