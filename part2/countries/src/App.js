@@ -16,22 +16,23 @@ const App = () => {
       })
   } 
   useEffect(hook, [])
-
-  console.log(countries.length)
-
+  
   const countriesToShow = (newFilter === '') 
   ? countries 
   : countries.filter(country => country.name.common.toLowerCase().includes(newFilter.toLowerCase()))
 
-  const handleFilterChange = (event) => {    
-    //console.log(event.target.value)
+  const handleFilterChange = (event) => {
     setnewFilter(event.target.value)  
+  }
+
+  const handleShowButtonClick = (index) => {
+    setnewFilter(countriesToShow[index].name.common)  
   }
 
   return (
     <div>
         <Filter filter={newFilter} handleFilterChange={handleFilterChange}/>
-        <Countries countries={countriesToShow}/>
+        <Countries countries={countriesToShow} handleShowButtonClick={handleShowButtonClick}/>
     </div>
   )
 }

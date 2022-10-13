@@ -1,14 +1,5 @@
-import { useState } from 'react'
-
-const Country = ({displayFullInfo, country}) => {
-    const [fullInfo, setFullInfo] = useState(displayFullInfo)
-
-    const handleShowButtonClick = () => 
-    {
-        setFullInfo(true)
-    }
-
-    if(fullInfo)
+const Country = ({country, displayFullInfo, handleShowButtonClick}) => {
+    if(displayFullInfo)
     {
         return(
         <div>
@@ -30,7 +21,7 @@ const Country = ({displayFullInfo, country}) => {
         return(
         <div>
             <>{country.name.common}</>
-            <button onClick={() => handleShowButtonClick()}>
+            <button onClick={handleShowButtonClick}>
                 show
             </button>
         </div>
@@ -38,7 +29,8 @@ const Country = ({displayFullInfo, country}) => {
     }
 }
 
-const Countries = ({countries}) => {
+const Countries = ({countries, handleShowButtonClick}) => {
+    console.log(countries)
     if(countries.length === 1)
     {
         return(
@@ -50,7 +42,11 @@ const Countries = ({countries}) => {
     else if(countries.length <= 10){
         return(
             <div>
-                {countries.map(country => <Country key={country.ccn3} displayFullInfo={false} country={country}/>)}
+                {countries.map((country, index) => <Country 
+                    key={index} 
+                    country={country} 
+                    displayFullInfo={false} 
+                    handleShowButtonClick={() => handleShowButtonClick(index)}/>)}
             </div>
         )
     }
@@ -58,6 +54,13 @@ const Countries = ({countries}) => {
         return(
             <div>
                 <>Too many matches, specify another filter</>
+            </div>
+        )
+    }
+    else{
+        return(
+            <div>
+                <>No data received from server</>
             </div>
         )
     }
