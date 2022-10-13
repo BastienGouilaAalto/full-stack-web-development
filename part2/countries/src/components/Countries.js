@@ -1,3 +1,5 @@
+import Weather from "./Weather"
+
 const Country = ({country, displayFullInfo, handleShowButtonClick}) => {
     if(displayFullInfo)
     {
@@ -14,6 +16,8 @@ const Country = ({country, displayFullInfo, handleShowButtonClick}) => {
                 src={Object.values(country.flags)[0]}
                 alt="flag"
             />
+            <h2>Weather in {country.capital}</h2>
+            <Weather city={country.capital}/>
         </div>
         )
     }
