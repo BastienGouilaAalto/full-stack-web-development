@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import personService from './services/Communication'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import PersonsForm from './components/PersonForm'
@@ -10,43 +10,45 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setnewFilter] = useState('')
 
-  const hook = () => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('data received from server')
-        setPersons(response.data)
-      })
-  } 
-  useEffect(hook, [])
+  useEffect(() => {
+    personService
+      .getAll()
+      .then(initialPersons => {setPersons(initialPersons)})
+  }, [])
 
-  const personsToShow = (newFilter === '') 
+  const personsToShow = (newFilter === '')
   ? persons 
   : persons.filter(person => person.name.toLowerCase().includes(newFilter.toLowerCase()))
 
   const addNewPerson = (event) => {
     event.preventDefault()
     const personObject = {
-      id: persons.length + 1,
       name: newName,
       number: newNumber
     }
 
     if (persons.filter(person => JSON.stringify(person.name) === JSON.stringify(personObject.name)).length > 0) {
-      alert(`${newName} is already added to phonebook`)
-    }
-    else if(persons.filter(person => JSON.stringify(person.number) === JSON.stringify(personObject.number)).length > 0){
-      alert(`${newNumber} is already added to phonebook`)
+      let id = persons.filter(person => JSON.stringify(person.name) === JSON.stringify(personObject.name))[0].id
+      if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+        personService
+        .update(id, personObject)
+        .then(returnedPerson => {
+          setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+        })
+        .catch(error => {
+          alert(`the person '${newName}' was already deleted from server`)      
+          setPersons(persons.filter(person => person.id !== id))})
+      }
     }
     else{
-      axios
-      .post('http://localhost:3001/persons', personObject)
-      .then(response => {
-        setPersons(persons.concat(response.data))
+      personService
+      .create(personObject)
+      .then(returnedPersons => {
+        setPersons(persons.concat(returnedPersons))
+        setNewName('')
+        setNewNumber('')
       })
     }
-    setNewName('')
-    setNewNumber('')
   }
 
   const handleNameChange = (event) => {    
@@ -64,6 +66,19 @@ const App = () => {
     setnewFilter(event.target.value)  
   }
 
+  const handleDeletePerson = (index) => {    
+    if (window.confirm(`Delete ${persons[index].name}?`)) {
+      personService
+      .delete(persons[index].id)
+      .then(returnedPersons => {
+        setPersons(persons.filter(person => person.id !== persons[index].id))
+      })
+      .catch(error => {
+        alert(`the person '${persons[index].name}' was already deleted from server`)      
+        setPersons(persons.filter(person => person.id !== persons[index].id))})
+    }
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -74,7 +89,7 @@ const App = () => {
           newNumber={newNumber} handleNumberChange={handleNumberChange} 
           addNewPerson={addNewPerson}/>
       <h3>Numbers</h3>
-        <Persons persons={personsToShow}/>
+        <Persons persons={personsToShow} handleDeletePerson={handleDeletePerson}/>
     </div>
   )
 }

@@ -1,13 +1,22 @@
-const Person = ({person}) => {
+const Person = ({person, handleDeletePerson}) => {
     return(
-      <p>{person.name} {person.number}</p>
+      <div>
+        <>{person.name} {person.number} </>
+        <button onClick={handleDeletePerson}>
+          delete
+        </button>
+      </div>
     )
 }
 
-const Persons = ({persons}) => {
+const Persons = ({persons, handleDeletePerson}) => {
     return(
       <div>
-          {persons.map(person => <Person key={person.id} person={person}/>)}
+          {persons.map((person, index) => <Person 
+            key={person.id} 
+            person={person} 
+            handleDeletePerson={() => handleDeletePerson(index)}
+            />)}
       </div>
     )
   }
