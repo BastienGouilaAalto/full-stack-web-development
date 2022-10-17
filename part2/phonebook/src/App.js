@@ -36,21 +36,34 @@ const App = () => {
         personService
         .update(id, personObject)
         .then(returnedPerson => {
+          console.log(`Updated ${personObject.name}`)
           setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+          setErrorMessage([`Updated ${personObject.name}`, 'NOTIFICATION'])
+          setTimeout(() => { setErrorMessage(null) }, 5000)
         })
         .catch(error => {
-          alert(`the person '${newName}' was already deleted from server`)      
-          setPersons(persons.filter(person => person.id !== id))})
+          console.log(error.message)
+          setPersons(persons.filter(person => person.id !== id))
+          setErrorMessage([`Information of ${newName} has already been removed from server`, 'ERROR'])
+          setTimeout(() => { setErrorMessage(null) }, 5000)
+        })
       }
     }
     else{
       personService
       .create(personObject)
       .then(returnedPersons => {
+        console.log(`Added ${personObject.name}`)
         setPersons(persons.concat(returnedPersons))
         setNewName('')
         setNewNumber('')
-        setErrorMessage(`Added ${personObject.name}`)
+        setErrorMessage([`Added ${personObject.name}`, 'NOTIFICATION'])
+        setTimeout(() => { setErrorMessage(null) }, 5000)
+      })
+      .catch(error => {
+        console.log(error.message)
+        setPersons(persons.filter(person => person.name !== newName))
+        setErrorMessage([`Information of ${newName} failed to be added to server`, 'ERROR'])
         setTimeout(() => { setErrorMessage(null) }, 5000)
       })
     }
@@ -76,18 +89,24 @@ const App = () => {
       personService
       .delete(persons[index].id)
       .then(returnedPersons => {
+        console.log(`Deleted ${persons[index].name}`)
         setPersons(persons.filter(person => person.id !== persons[index].id))
+        setErrorMessage([`Deleted ${persons[index].name}`, 'NOTIFICATION'])
+        setTimeout(() => { setErrorMessage(null) }, 5000)
       })
       .catch(error => {
-        alert(`the person '${persons[index].name}' was already deleted from server`)      
-        setPersons(persons.filter(person => person.id !== persons[index].id))})
+        console.log(error.message)
+        setPersons(persons.filter(person => person.id !== persons[index].id))
+        setErrorMessage([`Information of ${persons[index].name} has already been removed from server`, 'ERROR'])
+        setTimeout(() => { setErrorMessage(null) }, 5000)
+      })
     }
   }
 
   return (
     <div>
       <h2>Phonebook</h2>
-        <Notification message={errorMessage} />
+        <Notification message={errorMessage}/>
         <Filter filter={newFilter} handleFilterChange={handleFilterChange}/>
       <h3>Add a new</h3>
         <PersonsForm 
