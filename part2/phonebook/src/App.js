@@ -3,12 +3,15 @@ import personService from './services/Communication'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import PersonsForm from './components/PersonForm'
+import Notification from './components/Notification'
+import './index.css'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newFilter, setnewFilter] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
 
   useEffect(() => {
     personService
@@ -47,6 +50,8 @@ const App = () => {
         setPersons(persons.concat(returnedPersons))
         setNewName('')
         setNewNumber('')
+        setErrorMessage(`Added ${personObject.name}`)
+        setTimeout(() => { setErrorMessage(null) }, 5000)
       })
     }
   }
@@ -82,6 +87,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+        <Notification message={errorMessage} />
         <Filter filter={newFilter} handleFilterChange={handleFilterChange}/>
       <h3>Add a new</h3>
         <PersonsForm 
