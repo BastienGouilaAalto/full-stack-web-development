@@ -34,16 +34,14 @@ const Country = ({country, displayFullInfo, handleShowButtonClick}) => {
 }
 
 const Countries = ({countries, handleShowButtonClick}) => {
-    console.log(countries)
-    if(countries.length === 1)
-    {
+    if(countries.length > 10 || countries.length < 1){
         return(
             <div>
-                <Country displayFullInfo={true} country={countries[0]}/>
+                <>Too many matches, specify another filter</>
             </div>
         )
     }
-    else if(countries.length <= 10){
+    else if(countries.length <= 10 && countries.length > 1){
         return(
             <div>
                 {countries.map((country, index) => <Country 
@@ -54,17 +52,11 @@ const Countries = ({countries, handleShowButtonClick}) => {
             </div>
         )
     }
-    else if(countries.length > 10){
+    else if(countries.length === 1)
+    {
         return(
             <div>
-                <>Too many matches, specify another filter</>
-            </div>
-        )
-    }
-    else{
-        return(
-            <div>
-                <>No data received from server</>
+                <Country displayFullInfo={true} country={countries[0]}/>
             </div>
         )
     }
