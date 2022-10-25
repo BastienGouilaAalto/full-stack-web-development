@@ -11,7 +11,16 @@ It is built and sent to production as a folder to the backend folder.
 To access the phonebook application online, use the following URL.
 https://enigmatic-peak-42342.herokuapp.com
 
+```bash
+# Check heroku logs
+$ npm run logs:prod
+```
+
 ### Locally
+
+On this address:
+http://localhost:3001/
+
 ```bash
 # Dependencies
 $ npm install
@@ -21,10 +30,4 @@ $ npm start
 
 # Start the application in dev mode
 $ npm run dev
-
-# Start the application in dev mode
-$ npm run logs:prod
 ```
-
-On this address:
-http://localhost:3001/
