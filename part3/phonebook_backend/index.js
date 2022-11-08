@@ -76,19 +76,19 @@ app.post('/api/persons', (request, response) => {
       error: 'number is missing'
     })
   }
-  if(persons.filter(person => person.name === body.name).length > 0){
-    return response.status(400).json({
-      error:`${body.name} is already in the phonebook`
-    })
-  }
-    const newId = Number(Math.round(Math.random() * 1000))
-    const person = {
-      id : newId,
+  // if(persons.filter(person => person.name === body.name).length > 0){
+  //   return response.status(400).json({
+  //     error:`${body.name} is already in the phonebook`
+  //   })
+  // }
+    const person = new Person ({
       name : body.name,
       number : body.number
-    }
-    persons = persons.concat(person)
-    return response.status(200).json(person)
+    })
+    person.save().then(savedPerson => 
+    { 
+      return response.status(200).json(savedPerson)
+    })
 })
 
 const PORT = process.env.PORT
