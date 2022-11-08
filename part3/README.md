@@ -18,6 +18,11 @@ $ npm run logs:prod
 
 ### Locally
 
+create a .env file and put there the MONGODB_URI for connecting to your mongodb database:
+```
+MONGODB_URI=<YOUR-MONGODB-URI>
+```
+
 On this address:
 http://localhost:3001/
 
