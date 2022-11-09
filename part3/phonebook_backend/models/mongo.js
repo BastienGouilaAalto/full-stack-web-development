@@ -17,13 +17,13 @@ mongoose.connect(url)
 const personSchema = new mongoose.Schema({
   name: {
     type: String,
-    minlength: 3,
+    minlength: [3, 'Name must have atleast 3 characters'],
     required: true,
-    unique: [true, 'User is already in the phonebook']
+    unique: [true, 'Number must have atleast 8 characters']
   },
   number: {
     type: String,
-    minlength: 8,    
+    minlength: [8, 'User is already in the phonebook'],    
     validate: {
       validator: function(v) {
         return /\d{2}?(\d{1})-\D/.test(v);
