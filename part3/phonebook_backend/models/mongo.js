@@ -18,12 +18,12 @@ const personSchema = new mongoose.Schema({
   name: {
     type: String,
     minlength: [3, 'Name must have atleast 3 characters'],
-    required: true,
-    unique: [true, 'Number must have atleast 8 characters']
+    required: [true, 'User name required'],
+    unique: [true, 'User is already in the phonebook']
   },
   number: {
     type: String,
-    minlength: [8, 'User is already in the phonebook'],    
+    minlength: [8, 'Number must have atleast 8 characters'],    
     validate: {
       validator: function(v) {
         return /\d{2}?(\d{1})-\D/.test(v);
