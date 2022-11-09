@@ -43,6 +43,7 @@ const App = () => {
         })
         .catch(error => {
           console.log(error.message)
+          console.log(error.response.data.error)
           setPersons(persons.filter(person => person.id !== id))
           setErrorMessage([`Information of ${newName} has already been removed from server`, 'ERROR'])
           setTimeout(() => { setErrorMessage(null) }, 5000)
@@ -62,6 +63,7 @@ const App = () => {
       })
       .catch(error => {
         console.log(error.message)
+        console.log(error.response.data.error)
         setPersons(persons.filter(person => person.name !== newName))
         setErrorMessage([`Information of ${newName} failed to be added to server`, 'ERROR'])
         setTimeout(() => { setErrorMessage(null) }, 5000)
@@ -96,6 +98,7 @@ const App = () => {
       })
       .catch(error => {
         console.log(error.message)
+        console.log(error.response.data.error)
         setPersons(persons.filter(person => person.id !== persons[index].id))
         setErrorMessage([`Information of ${persons[index].name} has already been removed from server`, 'ERROR'])
         setTimeout(() => { setErrorMessage(null) }, 5000)
