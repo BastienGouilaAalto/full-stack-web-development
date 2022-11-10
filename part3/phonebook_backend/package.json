@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "lint": "eslint .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:ui": "rm -rf build && cd ../phonebook_frontend/ && npm run build && cp -r build ../phonebook_backend",
     "deploy": "git push heroku master",
@@ -15,6 +16,7 @@
   "author": "Bastien Gouila",
   "license": "MIT",
   "devDependencies": {
+    "eslint": "^8.27.0",
     "nodemon": "^2.0.20"
   },
   "dependencies": {
