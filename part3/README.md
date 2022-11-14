@@ -21,6 +21,7 @@ $ npm run logs:prod
 create a .env file and put there the MONGODB_URI for connecting to your mongodb database:
 ```
 MONGODB_URI=<YOUR-MONGODB-URI>
+PORT=3001
 ```
 
 On this address:
