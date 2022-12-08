@@ -29,6 +29,14 @@ describe('when there is initially some blogs saved', () => {
     expect(response.body).toHaveLength(helper.initialBlogs.length)
   }, 100000)
 
+  test('bloglist contains a blog about Canonical string reduction', async () => {
+    const response = await api.get('/api/blogs')
+    const titles = response.body.map(blog => blog.title)
+    expect(titles).toContain(
+      'Canonical string reduction'
+    )
+  }, 100000)
+
   test('unique identifier property of the blog posts is named id', async () => {
     const blogs = await Blog.find({})
     expect(blogs[0]._id).toBeDefined()
