@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt')
 const supertest = require('supertest')
 const mongoose = require('mongoose')
 const helper = require('./test_helper')
@@ -5,10 +6,15 @@ const app = require('../app')
 const api = supertest(app)
 
 const Blog = require('../models/blog')
+const User = require('../models/user')
 
 beforeEach(async () => {
+  await User.deleteMany({})
+  const passwordHash = await bcrypt.hash('sekret', 10)
+  const user = new User({ username: 'root', passwordHash })
+  await user.save()
+  
   await Blog.deleteMany({})
-
   for (let blog of helper.initialBlogs) {
     let blogObject = new Blog(blog)
     await blogObject.save()
@@ -47,11 +53,15 @@ describe('when there is initially some blogs saved', () => {
 describe('HTTP POST request to the /api/blogs url successfully creates a new blog post', () => {
 
   test('succeeds with valid data', async () => {
+    const users = await helper.usersInDb()
+    const user = users[0]
+
     const newBlog = {
       title: 'test title',
       author: 'test author',
       url: 'http://testurl.html',
-      likes: 0
+      likes: 0,
+      userId : user.id
     }
 
     await api
@@ -70,10 +80,14 @@ describe('HTTP POST request to the /api/blogs url successfully creates a new blo
   }, 100000)
 
   test('if the likes property is missing from the request, it will default to the value 0', async () => {
+    const users = await helper.usersInDb()
+    const user = users[0]
+
     const newBlog = {
       title: 'test title',
       author: 'test author',
-      url: 'http://testurl.html'
+      url: 'http://testurl.html',
+      userId : user.id
     }
 
     await api
@@ -90,9 +104,13 @@ describe('HTTP POST request to the /api/blogs url successfully creates a new blo
   }, 100000)
 
   test('fails with status code 400 if the title or url properties are missing', async () => {
+    const users = await helper.usersInDb()
+    const user = users[0]
+
     const newBlog = {
       author: 'test author',
-      likes: 0
+      likes: 0,
+      userId : user.id
     }
 
     await api
