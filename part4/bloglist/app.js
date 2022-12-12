@@ -28,7 +28,7 @@ app.use(middleware.tokenExtractor)
 app.use('/api/login', loginRouter)
 app.use('/api/users', usersRouter)
 // use the middleware only in /api/blogs routes
-app.use('/api/blogs', middleware.userExtractor, blogsRouter)
+app.use('/api/blogs', blogsRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)

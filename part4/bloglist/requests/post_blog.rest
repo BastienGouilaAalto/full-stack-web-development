@@ -6,7 +6,7 @@ content-type: application/json
 authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3RVc2VyMiIsImlkIjoiNjM5NmViZmExN2JhMGY3NzQ2MGExYWE5IiwiaWF0IjoxNjcwODUyNDgyLCJleHAiOjE2NzA4NTYwODJ9.uEVyhI9UI-2Y_PMb598UdvDgr0DeyMuMjuB9nwhwYLQ
 
 {
-    "title": "Test Blog User 2 2",
+    "title": "Test Blog User",
     "author": "John Smith",
     "url": "http://www.testblog.com",
     "likes": 0
