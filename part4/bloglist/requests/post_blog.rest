@@ -3,10 +3,10 @@ GET http://localhost:3003/api/blogs
 ###
 POST http://localhost:3003/api/blogs
 content-type: application/json
-authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3RVc2VyMiIsImlkIjoiNjM5NmViZmExN2JhMGY3NzQ2MGExYWE5IiwiaWF0IjoxNjcwODQyNjU0LCJleHAiOjE2NzA4NDYyNTR9.yrSCrrfPAGhzcM-q7MXbXDyhTALpzmT9PDQ4sOKeBH0
+authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IlRlc3RVc2VyMiIsImlkIjoiNjM5NmViZmExN2JhMGY3NzQ2MGExYWE5IiwiaWF0IjoxNjcwODUyNDgyLCJleHAiOjE2NzA4NTYwODJ9.uEVyhI9UI-2Y_PMb598UdvDgr0DeyMuMjuB9nwhwYLQ
 
 {
-    "title": "Test Blog User 2 1",
+    "title": "Test Blog User 2 2",
     "author": "John Smith",
     "url": "http://www.testblog.com",
     "likes": 0
