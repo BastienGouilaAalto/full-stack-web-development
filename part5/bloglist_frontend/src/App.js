@@ -48,7 +48,7 @@ const App = () => {
       setPassword('')
     }
     catch (exception) {
-      setErrorMessage('Wrong credentials')
+      setErrorMessage(['wrong username or password', 'ERROR'])
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -137,7 +137,7 @@ const App = () => {
         setNewTitle('')
         setNewAuthor('')
         setNewUrl('')
-        setErrorMessage([`A new blog ${returnedBlog.title} by ${returnedBlog.author} added', 'NOTIFICATION`])
+        setErrorMessage([`a new blog ${returnedBlog.title} by ${returnedBlog.author} added`, 'NOTIFICATION'])
         setTimeout(() => {
           setErrorMessage(null)
         }, 5000)
@@ -146,7 +146,7 @@ const App = () => {
         console.log(error.message)
         console.log(error.response.data.error)
         setBlogs(blogs.filter(blog => blog.id !== blogObject.id))
-        setErrorMessage([`Information of ${newTitle} failed to be added to server`, 'ERROR'])
+        setErrorMessage([`information of ${newTitle} failed to be added to server`, 'ERROR'])
         setTimeout(() => {
           setErrorMessage(null)
         }, 5000)
@@ -161,8 +161,7 @@ const App = () => {
       {user === null ?
         loginForm() :
         <div>
-          <p>{user.name} logged in</p>
-          {logoutForm()}
+          <p>{user.name} logged in</p> {logoutForm()}
           {blogFrom()}
         </div>
       }
