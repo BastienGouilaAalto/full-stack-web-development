@@ -113,6 +113,27 @@ const App = () => {
       )
   }
 
+  const deleteBlog = (id) => {
+    blogService.remove(id)
+      .then(() => {
+        console.log(`Deleted: ${id}`)
+        setBlogs(blogs.filter(blog => blog.id !== id))
+        setErrorMessage([`blog ${id} succesfully deleted`, 'NOTIFICATION'])
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      })
+      .catch(error => {
+        console.log(error.message)
+        console.log(error.response.data.error)
+        setErrorMessage([`blog ${id} failed to be deleted from server`, 'ERROR'])
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      }
+      )
+  }
+
   const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes);
 
   return (
@@ -137,7 +158,14 @@ const App = () => {
           </Togglable>
         </div>
       }
-      {sortedBlogs.map(blog => <Blog key={blog.id} blog={blog} updateBlog={updatedBlog}  />)}
+      {sortedBlogs.map(blog => 
+        <Blog key=
+          {blog.id}
+          blog={blog}
+          user={user} 
+          updateBlog={updatedBlog}
+          deleteBlog={deleteBlog}
+      />)}
     </div>
   )
 }
