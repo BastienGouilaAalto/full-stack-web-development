@@ -91,6 +91,28 @@ const App = () => {
       )
   }
 
+  const updatedBlog = (updatedBlog) => {
+    blogService.update(updatedBlog.id, updatedBlog)
+      .then(returnedBlog => {
+        returnedBlog.user = updatedBlog.user
+        console.log(`Updated: ${returnedBlog}`)
+        setBlogs(blogs.map(blog => blog.id !== returnedBlog.id ? blog : returnedBlog))
+        setErrorMessage([`updated blog ${returnedBlog.title} by ${returnedBlog.author} updated`, 'NOTIFICATION'])
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      })
+      .catch(error => {
+        console.log(error.message)
+        console.log(error.response.data.error)
+        setErrorMessage([`information of ${updatedBlog.title} failed to be updated to server`, 'ERROR'])
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      }
+      )
+  }
+
   return (
     <div>
       <h2>blogs</h2>
@@ -113,7 +135,7 @@ const App = () => {
           </Togglable>
         </div>
       }
-      {blogs.map(blog => <Blog key={blog.id} blog={blog} />)}
+      {blogs.map(blog => <Blog key={blog.id} blog={blog} updateBlog={updatedBlog}  />)}
     </div>
   )
 }
