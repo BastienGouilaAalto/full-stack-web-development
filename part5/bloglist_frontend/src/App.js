@@ -71,6 +71,7 @@ const App = () => {
     blogFormRef.current.toggleVisibility()
     blogService.create(blogObject)
       .then(returnedBlog => {
+        returnedBlog.user = user
         console.log(`Added: ${returnedBlog}`)
         setBlogs(blogs.concat(returnedBlog))
         setErrorMessage([`a new blog ${returnedBlog.title} by ${returnedBlog.author} added`, 'NOTIFICATION'])
