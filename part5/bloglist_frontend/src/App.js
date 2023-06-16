@@ -19,7 +19,7 @@ const App = () => {
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -134,14 +134,14 @@ const App = () => {
       )
   }
 
-  const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes);
+  const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes)
 
   return (
     <div>
       <h2>blogs</h2>
       <Notification message={errorMessage}/>
       {user === null ?
-      <Togglable buttonLabel="login">
+        <Togglable buttonLabel="login">
           <LoginForm
             handleLogin={handleLogin}
             username={username}
@@ -158,14 +158,14 @@ const App = () => {
           </Togglable>
         </div>
       }
-      {sortedBlogs.map(blog => 
+      {sortedBlogs.map(blog =>
         <Blog key=
           {blog.id}
-          blog={blog}
-          user={user} 
-          updateBlog={updatedBlog}
-          deleteBlog={deleteBlog}
-      />)}
+        blog={blog}
+        user={user}
+        updateBlog={updatedBlog}
+        deleteBlog={deleteBlog}
+        />)}
     </div>
   )
 }
