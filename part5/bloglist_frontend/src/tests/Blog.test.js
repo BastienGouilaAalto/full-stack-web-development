@@ -35,14 +35,12 @@ test("checks that the component displaying a blog renders the blog's title and a
   
     // Use the getByText query to check if the title and author are rendered. <div> {blog.title} {blog.author} </div>
     const titleAndAuthorElement = component.getByText('Test Blog Title Test Author');
-  
     // Use the queryByText query to check if the URL and number of likes are not rendered
     const urlElement = component.queryByText('http://testblog.com');
     const likesElement = component.queryByText('5');
   
     // Assert that the title and author are rendered
     expect(titleAndAuthorElement).toBeInTheDocument();
-  
     // Assert that the URL and number of likes are not rendered
     expect(urlElement).not.toBeInTheDocument();
     expect(likesElement).not.toBeInTheDocument();
@@ -67,11 +65,42 @@ test("checks that the component displaying a blog renders the blog's title and a
     const urlElement = component.getByText('http://testblog.com');
     const likesElement = component.getByText('likes 5');
 
-    // Assert that the title and author are rendered
+    // Assert that the title and author, url and number of likes are rendered
     expect(titleAndAuthorElement).toBeInTheDocument();
     expect(urlElement).toBeInTheDocument();
     expect(likesElement).toBeInTheDocument();
 
+  });
+
+  test("ensures that if the like button is clicked twice, the event handler the component received as props is called twice", async () => {
+    // Render the Blog component
+    const component = render(<Blog 
+        blog={blog} 
+        user={user} 
+        updateBlog={mockUpdateBlogHandler} 
+        deleteBlog={mockDeleteBlogHandler} 
+        />);
+    
+    const interactiveUser = userEvent.setup();
+    const buttonView = component.getByText('view');
+    await interactiveUser.click(buttonView);
+
+    // Use the getByText query to check if the title and author are rendered. <div> {blog.title} {blog.author} </div>
+    const titleAndAuthorElement = component.getByText('Test Blog Title Test Author');
+    // Use the queryByText query to check if the URL and number of likes are rendered
+    const urlElement = component.getByText('http://testblog.com');
+    const likesElement = component.getByText('likes 5');
+
+    // Assert that the title and author, url and number of likes are rendered
+    expect(titleAndAuthorElement).toBeInTheDocument();
+    expect(urlElement).toBeInTheDocument();
+    expect(likesElement).toBeInTheDocument();
+
+    const buttonLike = component.getByText('like');
+    await interactiveUser.click(buttonLike);
+    await interactiveUser.click(buttonLike);
+
+    expect(mockUpdateBlogHandler.mock.calls).toHaveLength(2);
   });
 
 });

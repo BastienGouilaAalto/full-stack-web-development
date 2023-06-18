@@ -17,7 +17,6 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
       ...blog,
       likes: blog.likes + 1
     }
-    console.log(updatedBlog)
     updateBlog(updatedBlog)
   }
 
