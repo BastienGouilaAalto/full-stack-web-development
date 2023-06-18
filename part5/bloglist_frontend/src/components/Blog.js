@@ -54,7 +54,10 @@ const Blog = ({ blog, user, updateBlog, deleteBlog }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
+  // user is optional but if it is passed, it must have a username property
+  user: PropTypes.shape({
+    username: PropTypes.string.isRequired,
+  }),
   updateBlog: PropTypes.func.isRequired,
   deleteBlog: PropTypes.func.isRequired
 }

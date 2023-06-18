@@ -55,8 +55,11 @@ test("checks that the component displaying a blog renders the blog's title and a
         deleteBlog={mockDeleteBlogHandler} 
         />);
     
+    // Simulate a user
     const interactiveUser = userEvent.setup();
+    // Use the getByText query to get the component that has the text 'view' on it
     const button = component.getByText('view');
+    // Simulate a user clicking the button
     await interactiveUser.click(button);
 
     // Use the getByText query to check if the title and author are rendered. <div> {blog.title} {blog.author} </div>
@@ -81,8 +84,11 @@ test("checks that the component displaying a blog renders the blog's title and a
         deleteBlog={mockDeleteBlogHandler} 
         />);
     
+    // Simulate a user
     const interactiveUser = userEvent.setup();
+    // Use the getByText query to get the component that has the text 'view' on it
     const buttonView = component.getByText('view');
+    // Simulate a user clicking the button
     await interactiveUser.click(buttonView);
 
     // Use the getByText query to check if the title and author are rendered. <div> {blog.title} {blog.author} </div>
@@ -96,10 +102,13 @@ test("checks that the component displaying a blog renders the blog's title and a
     expect(urlElement).toBeInTheDocument();
     expect(likesElement).toBeInTheDocument();
 
+    // Use the getByText query to get the component that has the text 'like' on it
     const buttonLike = component.getByText('like');
+    // Simulate a user clicking the button
     await interactiveUser.click(buttonLike);
     await interactiveUser.click(buttonLike);
 
+    // Assert that the event handler the component received as props has been called twice
     expect(mockUpdateBlogHandler.mock.calls).toHaveLength(2);
   });
 
