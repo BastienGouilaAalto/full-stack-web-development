@@ -10,7 +10,8 @@
     "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit",
     "deploy": "git push heroku master",
     "deploy:full": "git add . && git commit -m fulldeploy && npm run deploy",
-    "logs:prod": "heroku logs --tail"
+    "logs:prod": "heroku logs --tail",
+    "start:test": "NODE_ENV=test node index.js"
   },
   "author": "Bastien Gouila",
   "license": "MIT",
