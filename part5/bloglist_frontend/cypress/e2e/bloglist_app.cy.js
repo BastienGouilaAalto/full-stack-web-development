@@ -1,5 +1,5 @@
 describe('Blog app', function() {
-  
+
   beforeEach(function() {
     cy.request('POST', 'http://localhost:3003/api/testing/reset')
     // Create a new user in the backend
@@ -91,6 +91,80 @@ describe('Blog app', function() {
 
     })
 
+    it('Blogs are ordered according to likes with wait between clicks', function () {
+
+      cy.createBlog({ title: 'a blog created by cypress 1', author: 'cypress author 1', url: 'https://www.cypress.io/blog1'})
+      cy.createBlog({ title: 'a blog created by cypress 2', author: 'cypress author 1', url: 'https://www.cypress.io/blog2'})
+      cy.createBlog({ title: 'a blog created by cypress 3', author: 'cypress author 2', url: 'https://www.cypress.io/blog3'})
+
+      cy.get('.blog').then(blogs => {
+        cy.wrap(blogs[0]).contains('view').click()
+        cy.wrap(blogs[1]).contains('view').click()
+        cy.wrap(blogs[2]).contains('view').click()
+
+        // the wait is not necessary but it makes sure the likes are updated
+        cy.wrap(blogs[0]).contains('like').click()
+        cy.wait(200)
+        cy.wrap(blogs[0]).contains('like').click()
+        cy.wait(200)
+        cy.wrap(blogs[1]).contains('like').click()
+        cy.wait(200)
+        cy.wrap(blogs[1]).contains('like').click()
+        cy.wait(200)
+        cy.wrap(blogs[1]).contains('like').click()
+        cy.wait(200)
+        cy.wrap(blogs[1]).contains('like').click()
+        cy.wait(200)
+        cy.wrap(blogs[1]).contains('like').click()
+        cy.wait(200)
+        cy.wrap(blogs[2]).contains('like').click()
+        cy.wait(200)
+        cy.wrap(blogs[2]).contains('like').click()
+        cy.wait(200)
+        cy.wrap(blogs[2]).contains('like').click()
+        cy.wait(200)
+      })
+      cy.get('.blog').then(blogs => {
+        cy.wrap(blogs[0]).contains('a blog created by cypress 2')
+        cy.wrap(blogs[0]).contains('likes 5')
+        cy.wrap(blogs[1]).contains('a blog created by cypress 3')
+        cy.wrap(blogs[1]).contains('likes 3')
+        cy.wrap(blogs[2]).contains('a blog created by cypress 1')
+        cy.wrap(blogs[2]).contains('likes 2')
+      })
+    })
+
+    it('Blogs are ordered according to likes no wait between clicks', function () {
+
+      cy.createBlog({ title: 'a blog created by cypress 1', author: 'cypress author 1', url: 'https://www.cypress.io/blog1'})
+      cy.createBlog({ title: 'a blog created by cypress 2', author: 'cypress author 1', url: 'https://www.cypress.io/blog2'})
+      cy.createBlog({ title: 'a blog created by cypress 3', author: 'cypress author 2', url: 'https://www.cypress.io/blog3'})
+
+      cy.get('.blog').then(blogs => {
+        cy.wrap(blogs[0]).contains('view').click()
+        cy.wrap(blogs[1]).contains('view').click()
+        cy.wrap(blogs[2]).contains('view').click()
+
+        cy.wrap(blogs[0]).contains('like').click()
+        cy.wrap(blogs[0]).contains('like').click()
+        cy.wrap(blogs[1]).contains('like').click()
+        cy.wrap(blogs[1]).contains('like').click()
+        cy.wrap(blogs[1]).contains('like').click()
+        cy.wrap(blogs[1]).contains('like').click()
+        cy.wrap(blogs[1]).contains('like').click()
+        cy.wrap(blogs[2]).contains('like').click()
+        cy.wrap(blogs[2]).contains('like').click()
+        cy.wrap(blogs[2]).contains('like').click()
+      })
+      cy.get('.blog').then(blogs => {
+        cy.wrap(blogs[0]).contains('a blog created by cypress 2')
+        cy.wrap(blogs[0]).contains('likes 5')
+        cy.wrap(blogs[1]).contains('a blog created by cypress 3')
+        cy.wrap(blogs[1]).contains('likes 3')
+        cy.wrap(blogs[2]).contains('a blog created by cypress 1')
+        cy.wrap(blogs[2]).contains('likes 2')
+      })
+    })
   })
 
   describe('When logged out', function() {
