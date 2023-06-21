@@ -1,5 +1,3 @@
-Exercises 5.1 to 5.23 bloglist backend and frontend
-
 # Bloglist backend
 
 ## To run the application locally
@@ -29,46 +27,11 @@ Or separately with:
 npm test -- -t '{test name}'
 ```
 
-# Bloglist frontend
-
-## To run the application locally
-
-Install the node packages:
-```
-npm install
-```
-
-To run the application:
-```
-npm start
-```
-
-## Tests
-
-To run the tests:
-```
-npm run test
-```
-
-# Cypress tests
+## Cypress tests
 
 Cypress needs both the backend and frontend to be running.
-
-## Backend
 
 Put the application in test mode with:
 ```
 npm run start:test
-```
-
-## Frontend
-
-Start the application with:
-```
-npm start
-```
-
-To run the cypress tests:
-```
-npm run cypress:open
 ```
