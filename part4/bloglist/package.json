@@ -7,10 +7,7 @@
     "start": "cross-env NODE_ENV=production node index.js",
     "dev": "cross-env NODE_ENV=development nodemon index.js",
     "lint": "eslint .",
-    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit",
-    "deploy": "git push heroku master",
-    "deploy:full": "git add . && git commit -m fulldeploy && npm run deploy",
-    "logs:prod": "heroku logs --tail"
+    "test": "cross-env NODE_ENV=test jest --verbose --runInBand --forceExit"
   },
   "author": "Bastien Gouila",
   "license": "MIT",
