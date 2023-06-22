@@ -6,6 +6,12 @@ Install the node packages with:
 npm install
 ```
 
+Start the axios server with:
+
+```
+npm run server
+```
+
 Then start the app with:
 
 ```
