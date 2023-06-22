@@ -1,1 +1,13 @@
-Exercises 2.6 to 2.11 and 2.15 to 2.20 phonebook
+Exercises 2.6 to 2.17 phonebook
+
+Install the node packages with:
+
+```
+npm install
+```
+
+Then start the app with:
+
+```
+npm start
+```
