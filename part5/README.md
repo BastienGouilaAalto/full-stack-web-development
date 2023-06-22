@@ -15,7 +15,7 @@ TEST_MONGODB_URI=<YOUR-MONGODB-URI>
 ## REST
 The REST tests are also available, feel free to modify the randomly generated IDs and names to match your tests based on the API's response.
 
-## JEST tests
+## JEST backend tests
 
 25 tests with 3 suites
 
@@ -43,7 +43,7 @@ To run the application:
 npm start
 ```
 
-## Tests
+## JEST frontend tests
 
 To run the tests:
 ```
@@ -72,3 +72,14 @@ To run the cypress tests:
 ```
 npm run cypress:open
 ```
+
+## Note regarding the Cypress tests 
+
+There is a duplicated test in cypress regarding the blogs order according to the number of likes. One test waits between the clicks and the other one does not:
+
+```
+Blogs are ordered according to likes with wait between clicks
+Blogs are ordered according to likes no wait between clicks
+```
+
+Depending on your system, it could happen that the test that does not wait fails. If that is the case, please run the test again. This is mainly due to the fact that Cypress clicks "too fast" and the backend does not have time to update the likes before the test checks the order of the blogs.
