@@ -11,6 +11,14 @@ const App = () => {
   const { notification, setNotification } = useContext(NotificationContext)
 
   const newAnecdoteMutation = useMutation(createAnecdote, {
+    onError: (error) => {
+      if (error.response.status === 400) {
+        setNotification(error.response.data.error)
+      }
+      else {
+        setNotification('Something went wrong')
+      }
+    },
     onSuccess: (newAnecdote) => {
       const anecdotes = queryClient.getQueryData("anecdotes");
       queryClient.setQueryData("anecdotes", anecdotes.concat(newAnecdote));
@@ -27,6 +35,9 @@ const App = () => {
   }
 
   const updateAnecdoteMutation = useMutation(updateAnecdote, {
+    onError: (error) => {
+      setNotification('Something went wrong')
+    },
     onSuccess: (updatedAnecdote) => {
       queryClient.invalidateQueries('anecdotes')
       setNotification(`you voted ${updatedAnecdote.content}`)
