@@ -1,30 +1,35 @@
+import React, { useContext } from 'react'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
-import React, { getAnecdotes, createAnecdote, updateAnecdote } from './requests/Communication.js'
+import { getAnecdotes, createAnecdote, updateAnecdote } from './requests/Communication.js'
 import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
+import { NotificationContext } from './NotificationContext'
 
 const App = () => {
 
   const queryClient = useQueryClient()
+  const { notification, setNotification } = useContext(NotificationContext)
 
   const newAnecdoteMutation = useMutation(createAnecdote, {
     onSuccess: (newAnecdote) => {
       const anecdotes = queryClient.getQueryData("anecdotes");
       queryClient.setQueryData("anecdotes", anecdotes.concat(newAnecdote));
+      setNotification(`you created ${newAnecdote.content}`)
     },
   });
   
   const addNewAnecdote = (content) => {
     newAnecdoteMutation.mutate({ 
       content: content,
-      id: Math.floor(Math.random() * 10000), 
+      id: `${Math.floor(Math.random() * 100000)}`, 
       votes: 0 
     })
   }
 
   const updateAnecdoteMutation = useMutation(updateAnecdote, {
-    onSuccess: () => {
+    onSuccess: (updatedAnecdote) => {
       queryClient.invalidateQueries('anecdotes')
+      setNotification(`you voted ${updatedAnecdote.content}`)
     }
   })
 
@@ -47,7 +52,7 @@ const App = () => {
     <div>
       <h3>Anecdote app</h3>
     
-      <Notification />
+      <Notification message={notification.message} />
       <AnecdoteForm createAnecdote={addNewAnecdote} />
     
       {anecdotes.map(anecdote =>
