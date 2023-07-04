@@ -57,7 +57,12 @@ const App = () => {
     return <div>Loading...</div>
   }
 
-  const anecdotes = result.data
+  if (result.isError) {
+    return <div>anecdote service not available due to problems in server</div>
+  }
+
+  // order anecdotes by votes
+  const anecdotes = result.data.sort((a, b) => b.votes - a.votes)
 
   return (
     <div>
